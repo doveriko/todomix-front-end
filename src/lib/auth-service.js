@@ -8,14 +8,14 @@ class Auth {
     });
   }
 
-  signup({ username, password }) {
+  signup( username, password, email,  name, surname) {
     return this.auth
-      .post("/auth/signup", { username, password })
+      .post("/auth/signup", { username, password, email,  name, surname })
       .then(({ data }) => data);
     // .then((response) => response.data);
   }
 
-  login({ username, password }) {
+  login( username, password ) {
     return this.auth
       .post("/auth/login", { username, password })
       .then(({ data }) => data);
