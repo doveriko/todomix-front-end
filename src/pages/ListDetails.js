@@ -6,11 +6,8 @@ import EditList from "./EditList"
 class ListDetails extends Component {
   state = {
     name: "",
-    tasks: "",
+    tasks: [],
     status: "To-do",
-    private: true,
-    creator: {},
-    contributors: []
   };
 
   componentDidMount() {
@@ -22,9 +19,10 @@ class ListDetails extends Component {
 
     axios
     .get(`http://localhost:5000/lists/${id}`)
-    .then( oneList => {
-        const myList = oneList.data;
-        this.setState(myList);
+    .then( response => {
+        const oneList = response.data;
+        const { status, name, tasks } = oneList
+        this.setState({status, name, tasks});
     })
     .catch(err => console.log(err));
   }
@@ -38,7 +36,7 @@ class ListDetails extends Component {
     else {
       return (
         <EditList
-          theList={this.state}
+          myList={this.state}
           getTheList={this.getSingleList}
           {...this.props}
          />
@@ -51,7 +49,7 @@ class ListDetails extends Component {
       const { id } = this.props.match.params;
 
       axios
-      .delete(`http://localhost:5000/lists/${id}`)
+      .delete(`http://localhost:5000/lists/${id}`, {withCredentials: true})
       .then(() => this.props.history.push("/dashboard"))
       .catch(err => console.log(err))
   };
@@ -67,6 +65,17 @@ class ListDetails extends Component {
             <button onClick={ () => this.deleteList()}>DELETE LIST</button>
 
             <div>{this.renderEditForm()} </div>   				{/* ADD */}
+
+            <div>
+            {this.state.tasks.length > 0
+              ? this.state.tasks.map((eachTask, index) => {
+                return(<p key={eachTask._id}>{eachTask.text}</p>
+                  
+                )
+                })
+                : null
+              }
+            </div>
 
         </div>
     );

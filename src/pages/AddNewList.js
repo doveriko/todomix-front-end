@@ -5,20 +5,18 @@ export default class AddNewList extends Component {
 
     state = {
         name: "",
-        tasks: "",
         status: "To-do",
-        private: true,
-        creator: {},
-        contributors: []
+        newTask: "",
+        tasks: [],
     };
 
     handleSubmit = e => {
         e.preventDefault();
 
-        const { name, tasks, status, creator, contributors } = this.state;
+        const { name, tasks, status } = this.state;
 
         axios
-        .post("http://localhost:5000/lists", { name, tasks, status, creator, contributors })
+        .post("http://localhost:5000/lists", { name, tasks, status, isPrivate: true }, {withCredentials: true})
         .then(() => {
           // REFRESH THE LISTS
           this.props.getData();
@@ -26,11 +24,8 @@ export default class AddNewList extends Component {
           // RESET THE FROM STATE
           this.setState({
             name: "",
-            tasks: {},
+            tasks: [],
             status: "To-do",
-            private: true,
-            creator: {},
-            contributors: []
           });
         })
         .catch(err => console.log(err))
@@ -42,8 +37,27 @@ export default class AddNewList extends Component {
         this.setState({ [name]: value });
       };
 
+    addTask = e => {
+      e.preventDefault();
+
+      const task = {
+        text: this.state.newTask,
+        isDone: false
+      }
+
+      const tasksCopy = this.state.tasks; //   []
+      tasksCopy.push(task);     //  [ { text: "banana"}  ]
+      
+
+      this.setState({ tasks: tasksCopy, newTask : "" } )
+
+
+    }
+
     render() {
         return (
+          <div>
+
             <form onSubmit={this.handleSubmit}>
             <label>Title of the list:</label>
             <input
@@ -52,25 +66,45 @@ export default class AddNewList extends Component {
               value={this.state.name}
               onChange={this.handleChange}
             />
+            
+            
     
-            <label>Tasks:</label>
-            <input
-              type="text"
-              name="tasks"
-              value={this.state.tasks}
-              onChange={this.handleChange}
-            />
 
             <label>Status:</label>
             <input
               type="text"
-              name="tasks"
-              value={this.state.tasks}
+              name="status"
+              value={this.state.status}
               onChange={this.handleChange}
             />
 
             <button type="submit">Create List</button>
           </form>
+        
+            <form onSubmit={this.addTask}>
+              <label>Create tasks</label>
+              <input
+                type="text"
+                name="newTask"
+                value={this.state.newTask}
+                onChange={this.handleChange}
+
+              />
+              <button type="submit">Add task</button>
+            </form>
+              {this.state.tasks.length > 0
+              ? this.state.tasks.map((eachTask) => {
+                return(
+                  <div>
+                    <p>{eachTask.text}</p>
+                  </div>
+                )
+                })
+                : null
+              }
+          </div>
+
+
         )
     }
 }

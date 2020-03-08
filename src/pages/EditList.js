@@ -6,18 +6,16 @@ class EditList extends Component {
     name: "",
     tasks: "",
     status: "To-do",
-    private: true,
-    creator: {},
-    contributors: []
+    private: true
   };
 
   handleFormSubmit = event => {
     event.preventDefault();
-    const { title, description } = this.state;
-    const { _id } = this.props.theList;
+    const { name, tasks, status, creator, contributors  } = this.state;
+    const { _id } = this.props.myList;
   
     axios
-      .put(`http://localhost:5000/lists/${_id}`, { title, description })
+      .put(`http://localhost:5000/lists/${_id}`, { name, tasks, status, creator, contributors })
       .then(() => {
         this.props.getTheList();
         this.props.history.push('/dashboard');

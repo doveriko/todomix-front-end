@@ -33,13 +33,13 @@ export class Dashboard extends Component {
       
 
       <div id="allthelists">
-        <AddNewList getData={this.getAllLists} />
 
         <div>
-          {this.state.allLists.map(list => {
+          {this.state.allLists.map( (list) => {
             return (
               <div key={list._id} className="list">
-                <Link to={`/lists/${list._id}`}>
+                <h3>{list.status}</h3>
+                <Link to={`/list/${list._id}`}>
                   <h3>{list.name}</h3>
                  
                 </Link>
@@ -47,8 +47,11 @@ export class Dashboard extends Component {
             );
           })}
         </div>
-        JODER
+        <AddNewList getData={this.getAllLists} />
       </div>
+
+          
+
     </div>
     );
   }
