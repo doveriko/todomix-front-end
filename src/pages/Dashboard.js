@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Route, Link } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import { withAuth } from "../lib/Auth";
 import axios from "axios";
 
 import Navbar from '../components/Navbar';
-import AddNewList from './AddNewList'
+import AllLists from './AllLists';
+import ListDetails from './ListDetails';
 
 export class Dashboard extends Component {
   state = {
@@ -26,32 +27,29 @@ export class Dashboard extends Component {
   }
 
   render(){
+
+    const listsChecker = this.state.allLists;
+    if (!listsChecker.length) {
+      return (<div>NO LISTS YET</div>)
+    }
+
     return (
     <div>
       <Navbar/>
       <h1>DASHBOARD</h1>
-      
-
-      <div id="allthelists">
 
         <div>
-          {this.state.allLists.map( (list) => {
-            return (
-              <div key={list._id} className="list">
-                <h3>{list.status}</h3>
-                <Link to={`/list/${list._id}`}>
-                  <h3>{list.name}</h3>
-                 
-                </Link>
-              </div>
-            );
-          })}
+        <AllLists allLists={listsChecker}/>
         </div>
-        <AddNewList getData={this.getAllLists} />
-      </div>
-
-          
-
+        
+        <Switch>
+          <Route
+          exact path={"/list/:id"}
+          render={props => (
+          <ListDetails {...props} allLists={listsChecker} />
+          )}
+        />
+        </Switch>
     </div>
     );
   }

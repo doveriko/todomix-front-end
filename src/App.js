@@ -20,6 +20,8 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+            <div className="row">
+              <div className="col col-sm-12">
 
       <BrowserRouter>
         
@@ -31,11 +33,12 @@ class App extends Component {
 
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/list/:id" component={ListDetails} />
-          <PrivateRoute exact path="/new-list" component={AddNewList} />
+          
         </Switch>
 
       </BrowserRouter>
-
+</div>
+</div>
       </div>
     );
   }

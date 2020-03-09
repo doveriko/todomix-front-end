@@ -27,24 +27,6 @@ class ListDetails extends Component {
     .catch(err => console.log(err));
   }
 
-  renderEditForm = () => {
-    /* Check if the `state` is not empty when`renderEditForm`
-    is triggered before the state gets populated.
-     If the state is empty nothing can be passed to `EditProject` as the
-    value in `theProject` prop to populate the form  */
-    if (!this.state.name) return null;
-    else {
-      return (
-        <EditList
-          myList={this.state}
-          getTheList={this.getSingleList}
-          {...this.props}
-         />
-       // {...this.props}  so that we can use 'this.props.history' in EditProject
-      )
-    }
-  }
-
   deleteList = () => {
       const { id } = this.props.match.params;
 
@@ -63,8 +45,6 @@ class ListDetails extends Component {
             </Link>
 
             <button onClick={ () => this.deleteList()}>DELETE LIST</button>
-
-            <div>{this.renderEditForm()} </div>   				{/* ADD */}
 
             <div>
             {this.state.tasks.length > 0
