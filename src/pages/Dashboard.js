@@ -14,7 +14,7 @@ export class Dashboard extends Component {
 
   getAllLists = () => {
     axios
-    .get("http://localhost:5000/lists")
+    .get(process.env.REACT_APP_API_URL + "/lists")
     .then(response => {
       const allLists = response.data;
       this.setState({ allLists: allLists })

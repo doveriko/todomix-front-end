@@ -16,7 +16,7 @@ export default class AddNewList extends Component {
         const { name, tasks, status } = this.state;
 
         axios
-        .post("http://localhost:5000/lists", { name, tasks, status, isPrivate: true }, {withCredentials: true})
+        .post(process.env.REACT_APP_API_URL + "/lists", { name, tasks, status, isPrivate: true }, {withCredentials: true})
         .then(() => {
           // REFRESH THE LISTS
           this.props.getData();

@@ -15,7 +15,7 @@ class EditList extends Component {
     const { _id } = this.props.myList;
   
     axios
-      .put(`http://localhost:5000/lists/${_id}`, { name, tasks, status, creator, contributors })
+      .put(process.env.REACT_APP_API_URL + `lists/${_id}`, { name, tasks, status, creator, contributors })
       .then(() => {
         this.props.getTheList();
         this.props.history.push('/dashboard');

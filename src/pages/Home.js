@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { withAuth } from "./../lib/Auth";
 import { Link } from "react-router-dom";
-import logo from "../img/logo.png"
+import logo from "../img/logo.png";
+import { withAuth } from "./../lib/Auth";
 
 
 class Home extends Component {
@@ -31,9 +31,8 @@ class Home extends Component {
           <img src={logo} className="logo" alt="logo"/>
         </div>
 
-
         <div className="login-form">
-        <form onSubmit={this.handleFormSubmit}>
+        <form onSubmit={this.handleFormSubmit} className="login-form">
           <input
             placeholder="Enter your username"
             type="text"
@@ -65,4 +64,4 @@ class Home extends Component {
 }
 }
 
-export default Home;
+export default withAuth(Home);

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Redi } from "react-router-dom";
 
 
 import Home from "./pages/Home";
@@ -19,14 +19,11 @@ import Dashboard from "./pages/Dashboard";
 class App extends Component {
   render() {
     return (
-      <div className="container">
-            <div className="row">
-              <div className="col col-sm-12">
 
       <BrowserRouter>
         
         <Switch>
-          <Route exact path="/" component={Home} />
+          <AnonRoute exact path="/" component={Login} />
 
           <AnonRoute exact path="/signup" component={Signup} />
           <AnonRoute exact path="/login" component={Login} />
@@ -37,9 +34,7 @@ class App extends Component {
         </Switch>
 
       </BrowserRouter>
-</div>
-</div>
-      </div>
+
     );
   }
 }

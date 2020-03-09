@@ -18,7 +18,7 @@ class ListDetails extends Component {
     const { id } = this.props.match.params;
 
     axios
-    .get(`http://localhost:5000/lists/${id}`)
+    .get(process.env.REACT_APP_API_URL + `/lists/${id}`)
     .then( response => {
         const oneList = response.data;
         const { status, name, tasks } = oneList
@@ -31,7 +31,7 @@ class ListDetails extends Component {
       const { id } = this.props.match.params;
 
       axios
-      .delete(`http://localhost:5000/lists/${id}`, {withCredentials: true})
+      .delete(process.env.REACT_APP_API_URL + `/lists/${id}`, {withCredentials: true})
       .then(() => this.props.history.push("/dashboard"))
       .catch(err => console.log(err))
   };

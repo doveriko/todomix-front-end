@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../lib/Auth";
+import logo from "../img/logo.png";
 
 class Signup extends Component {
   state = { username: "", password: "",email: '',  name:'', surname:'' };
@@ -8,7 +9,6 @@ class Signup extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     const { username, password , email,  name, surname } = this.state;
-
     this.props.signup(username, password, email,  name, surname);
   };
 
@@ -22,54 +22,63 @@ class Signup extends Component {
     return (
       <div>
 
-        <h1>Sign Up</h1>
+      <div className="signup-upper">
+          <img src={logo} className="logo2" alt="logo"/>
+        </div>
 
+        <h1 className="section-header">Create an account</h1>
+
+        <div className="signup-form">
         <form onSubmit={this.handleFormSubmit}>
-          <label>Username:</label>
+
           <input
+            placeholder="Create your username"
             type="text"
             name="username"
             value={username}
             onChange={this.handleChange}
           />
 
-           <label>Name:</label>
           <input
+            placeholder="Name"
             type="text"
             name="name"
             value={name}
             onChange={this.handleChange}
           />
 
-            <label>Surname:</label>
           <input
+            placeholder="Surname"
             type="text"
             name="surname"
             value={surname}
             onChange={this.handleChange}
           />
 
-            <label>Email:</label>
           <input
+            placeholder="E-mail"
             type="email"
             name="email"
             value={email}
             onChange={this.handleChange}
           />
 
-          <label>Password:</label>
           <input
+            placeholder="Create a password"
             type="password"
             name="password"
             value={password}
             onChange={this.handleChange}
           />
-
-          <input type="submit" value="Signup" />
+          
+            <input type="submit" className="login-button" value="SIGN UP" />
         </form>
+      </div>
+      
+      <div className="signup-text">
+          Already registered? <Link to="/login">Log in</Link>
+      </div>
 
-        <p>Already have account?</p>
-        <Link to={"/login"}> Login</Link>
       </div>
     );
   }
