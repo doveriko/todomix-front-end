@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter, Switch, Redi } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 
 
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import ListDetails from "./pages/ListDetails";
+import EditList from "./pages/EditList";
 import AddNewList from "./pages/AddNewList";
 // import Private from "./pages/Private"
 
@@ -28,8 +28,10 @@ class App extends Component {
           <AnonRoute exact path="/signup" component={Signup} />
           <AnonRoute exact path="/login" component={Login} />
 
+          <PrivateRoute exact path="/new-list" component={AddNewList} />
+
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <PrivateRoute exact path="/list/:id" component={ListDetails} />
+          <PrivateRoute exact path="/list/:id" component={EditList} />
           
         </Switch>
 

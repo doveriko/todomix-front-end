@@ -1,37 +1,32 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../lib/Auth";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
 
 class Navbar extends Component {
   render() {
-    const { user, logout, isLoggedIn } = this.props;
+    const { user, logout } = this.props;
+
 
     return (
       <nav className="navbar">
-        <Link to={"/"} id="home-btn">
-          <h4>Home</h4>
-        </Link>
-        {isLoggedIn ? (
-          <>
-            <p>Hello{user.username}</p>
-            <button onClick={logout}>Logout</button>
-            <Link to="/new-list">
+
+        <div>
+          <Link to={"/"} id="home-btn">
+            <h4>Home</h4>
+          </Link>
+          <FontAwesomeIcon icon={faHome} />
+        </div>
+        <div>
+          <Link to="/new-list">
             <p>NEW LISTS</p>
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link to="/login">
-              {" "}
-              <button className="navbar-button">Login</button>{" "}
-            </Link>
-            <br />
-            <Link to="/signup">
-              {" "}
-              <button className="navbar-button">Sign Up</button>{" "}
-            </Link>
-          </>
-        )}
+          </Link>
+        </div>
+        <div>
+          <p>Hello {user.name}</p>
+          <button onClick={logout}>Logout</button>
+        </div>
       </nav>
     );
   }

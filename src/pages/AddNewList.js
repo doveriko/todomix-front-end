@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Navbar from '../components/Navbar';
 
 export default class AddNewList extends Component {
 
@@ -25,7 +26,7 @@ export default class AddNewList extends Component {
           this.setState({
             name: "",
             tasks: [],
-            status: "To-do",
+            status: "To-do"
           });
         })
         .catch(err => console.log(err))
@@ -48,15 +49,15 @@ export default class AddNewList extends Component {
       const tasksCopy = this.state.tasks; //   []
       tasksCopy.push(task);     //  [ { text: "banana"}  ]
       
-
       this.setState({ tasks: tasksCopy, newTask : "" } )
-
-
     }
 
     render() {
         return (
           <div>
+          <Navbar/>
+        
+            <h1>DASHBOARD</h1>
 
             <form onSubmit={this.handleSubmit}>
             <label>Title of the list:</label>
@@ -66,20 +67,9 @@ export default class AddNewList extends Component {
               value={this.state.name}
               onChange={this.handleChange}
             />
-            
-            
-    
-
-            <label>Status:</label>
-            <input
-              type="text"
-              name="status"
-              value={this.state.status}
-              onChange={this.handleChange}
-            />
 
             <button type="submit">Create List</button>
-          </form>
+            </form>
         
             <form onSubmit={this.addTask}>
               <label>Create tasks</label>
@@ -103,8 +93,6 @@ export default class AddNewList extends Component {
                 : null
               }
           </div>
-
-
         )
     }
 }

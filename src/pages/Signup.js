@@ -26,7 +26,7 @@ class Signup extends Component {
           <img src={logo} className="logo2" alt="logo"/>
         </div>
 
-        <h1 className="section-header">Create an account</h1>
+        <h1 className="section-header">CREATE AN ACCOUNT</h1>
 
         <div className="signup-form">
         <form onSubmit={this.handleFormSubmit}>

@@ -12,7 +12,6 @@ class Auth {
     return this.auth
       .post("/auth/signup", { username, password, email,  name, surname })
       .then(({ data }) => { 
-        console.log("hello from signup")
         return data
       });
     // .then((response) => response.data);
@@ -22,7 +21,6 @@ class Auth {
     return this.auth
       .post("/auth/login", { username, password })
       .then(({ data }) => { 
-        console.log("hello")
         return data
       });
     // .then((response) => response.data);

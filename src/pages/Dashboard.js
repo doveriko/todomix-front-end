@@ -6,15 +6,21 @@ import axios from "axios";
 import Navbar from '../components/Navbar';
 import AllLists from './AllLists';
 import ListDetails from './ListDetails';
+import SelectedList from '../components/SelectedList';
 
 export class Dashboard extends Component {
   state = {
-    allLists: []
+    allLists: [],
+    selectedList: null
   };
+
+  setSelectedList = (oneList) => {
+    this.setState({selectedList: oneList})
+  }
 
   getAllLists = () => {
     axios
-    .get(process.env.REACT_APP_API_URL + "/lists")
+    .get(process.env.REACT_APP_API_URL + "/lists", {withCredentials: true})
     .then(response => {
       const allLists = response.data;
       this.setState({ allLists: allLists })
@@ -28,28 +34,29 @@ export class Dashboard extends Component {
 
   render(){
 
-    const listsChecker = this.state.allLists;
-    if (!listsChecker.length) {
-      return (<div>NO LISTS YET</div>)
-    }
-
     return (
     <div>
       <Navbar/>
       <h1>DASHBOARD</h1>
+    {
+      (this.state.allLists.length < 1) ?
+      <h1>NO LISTS YET</h1>
+      :
+      <div>
+      <AllLists allLists={this.state.allLists} setSelectedList={this.setSelectedList}/>
 
-        <div>
-        <AllLists allLists={listsChecker}/>
-        </div>
-        
-        <Switch>
+      <SelectedList oneList={this.state.selectedList}/>
+        {/* <Switch>
           <Route
           exact path={"/list/:id"}
           render={props => (
           <ListDetails {...props} allLists={listsChecker} />
           )}
         />
-        </Switch>
+        </Switch> */}
+      </div>
+
+    }
     </div>
     );
   }

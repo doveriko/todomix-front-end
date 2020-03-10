@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import EditList from "./EditList"
+import Navbar from '../components/Navbar';
 
 class ListDetails extends Component {
   state = {
@@ -39,6 +40,7 @@ class ListDetails extends Component {
   render() {
     return (
         <div>
+          <Navbar/>
             <h1>{this.state.name}</h1>
             <Link to={"/dashboard"}>
                 <button>Back</button>

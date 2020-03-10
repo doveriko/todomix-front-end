@@ -3,22 +3,50 @@ import axios from "axios";
 
 class EditList extends Component {
   state = {
+    _id: undefined,
     name: "",
-    tasks: "",
-    status: "To-do",
-    private: true
+    tasks: [],
+    status: "To-do"
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-    const { name, tasks, status, creator, contributors  } = this.state;
-    const { _id } = this.props.myList;
-  
+  componentDidMount() {
+    // <PrivateRoute exact path="/list/:id" component={EditList} />
+    //   : ->>>  this.props.match.params.
+    //          this.props.match.params.id
+    //
+    const listId = this.props.match.params.id;
     axios
-      .put(process.env.REACT_APP_API_URL + `lists/${_id}`, { name, tasks, status, creator, contributors })
+      .get(process.env.REACT_APP_API_URL + `/lists/${listId}`, {
+        withCredentials: true
+      })
+      .then(response => {
+        const oneList = response.data;
+        this.setState({
+          _id: oneList._id,
+          tasks: oneList.tasks,
+          name: oneList.name,
+          status: oneList.status
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  handleFormUpdateSubmit = event => {
+    event.preventDefault();
+    const { name, tasks, status, _id } = this.state;
+
+    axios
+      .put(
+        process.env.REACT_APP_API_URL + `/lists/${_id}`,
+        {
+          name,
+          tasks,
+          status
+        },
+        { withCredentials: true }
+      )
       .then(() => {
-        this.props.getTheList();
-        this.props.history.push('/dashboard');
+        this.props.history.push("/dashboard");
       })
       .catch(err => console.log(err));
   };
@@ -33,24 +61,27 @@ class EditList extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleFormSubmit}>
-          <label>Title:</label>
+        <form onSubmit={this.handleFormUpdateSubmit}>
+          {/* <form onSubmit={() => console.log("CLIK SUBMIT")}> */}
+          <label>Name:</label>
           <input
             type="text"
-            name="title"
-            value={this.state.title}
+            name="name"
+            value={this.state.name}
             onChange={this.handleChange}
           />
 
-          <label>Description:</label>
+          <label>Status:</label>
 
-          <textarea
-            name="description"
-            value={this.state.description}
+          <input
+            name="status"
+            value={this.state.status}
             onChange={this.handleChange}
           />
 
-          <input type="submit" value="Submit" />
+          <button type="button" onClick={this.handleFormUpdateSubmit}>
+            EDIT LIST
+          </button>
         </form>
       </div>
     );
