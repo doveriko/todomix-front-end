@@ -1,27 +1,51 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class SelectedList extends Component {
+  // deleteList = () => {
+  //   const listId = this.props.match.params.id;
+  //   axios
+  //     .delete(process.env.REACT_APP_API_URL + `/lists/${listId}`, {
+  //       withCredentials: true
+  //     })
+  //     .then(() => this.props.history.push("/dashboard"))
+  //     .catch(err => console.log(err));
+  // };
+
   render() {
     const { oneList } = this.props;
 
     return (
       <div>
         {!oneList ? (
-          "No list selected"
+          <p id="select-one-list">Select one list to display</p>
         ) : (
           <div>
-            <h1>{oneList.name}</h1>
+            <h1 className="list-title">{oneList.name}</h1>
 
             <div>
               {oneList.tasks.length > 0
                 ? oneList.tasks.map((eachTask, index) => {
-                    return <p key={eachTask._id}>{eachTask.text}</p>;
+                    return (
+                      <h3 className="list-task" key={eachTask._id}>
+                        {eachTask.text}
+                      </h3>
+                    );
                   })
                 : null}
             </div>
-            {/* <button onClick={() => this.deleteList()}>DELETE LIST</button> */}
+            <div className="twobuttons">
+              <Link to={`/list/${oneList._id}`}>
+                <button id="edit-button">EDIT</button>
+              </Link>
+              <button id="delete-button" onClick={() => this.deleteList(oneList)}>DELETE</button>
+            </div>
           </div>
         )}
+
+        {/* <div>
+            </div>  */}
       </div>
     );
   }

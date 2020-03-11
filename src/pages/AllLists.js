@@ -2,9 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const AllLists = props => {
-
-
-
   return (
     <div>
       {props.allLists.map(list => {
@@ -13,13 +10,10 @@ const AllLists = props => {
             key={list._id}
             className="list"
             onClick={() => {
-              props.setSelectedList(list) ;
+              props.setSelectedList(list);
             }}
           >
-            <h3>{list.name}</h3>
-            <Link to={`/list/${list._id}`}>
-            <button></button>
-            </Link>
+            <Link className="text-decoration-none">{list.name}</Link>
           </div>
         );
       })}

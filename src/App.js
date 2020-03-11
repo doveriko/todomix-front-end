@@ -24,14 +24,12 @@ class App extends Component {
         
         <Switch>
           <AnonRoute exact path="/" component={Login} />
-
           <AnonRoute exact path="/signup" component={Signup} />
           <AnonRoute exact path="/login" component={Login} />
 
-          <PrivateRoute exact path="/new-list" component={AddNewList} />
-
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/list/:id" component={EditList} />
+          <PrivateRoute exact path="/new-list" component={AddNewList} />
           
         </Switch>
 

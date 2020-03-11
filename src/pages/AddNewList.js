@@ -1,66 +1,91 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Navbar from '../components/Navbar';
+import Navbar from "../components/Navbar";
 
 export default class AddNewList extends Component {
+  state = {
+    name: "",
+    status: "To-do",
+    newTask: "",
+    tasks: []
+  };
 
-    state = {
-        name: "",
-        status: "To-do",
-        newTask: "",
-        tasks: [],
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const { name, tasks, status } = this.state;
+
+    axios
+      .post(
+        process.env.REACT_APP_API_URL + "/lists",
+        { name, tasks, status, isPrivate: true },
+        { withCredentials: true }
+      )
+      .then(() => {
+        // REFRESH THE LISTS
+        this.props.getData();
+
+        // RESET THE FROM STATE
+        this.setState({
+          name: "",
+          tasks: [],
+          status: "To-do"
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+  handleChange = e => {
+    const { name, value } = e.target;
+
+    this.setState({ [name]: value });
+  };
+
+  addTask = e => {
+    e.preventDefault();
+
+    const task = {
+      text: this.state.newTask,
+      isDone: false
     };
 
-    handleSubmit = e => {
-        e.preventDefault();
+    const tasksCopy = this.state.tasks; //   []
+    tasksCopy.push(task); //  [ { text: "banana"}  ]
 
-        const { name, tasks, status } = this.state;
+    this.setState({ tasks: tasksCopy, newTask: "" });
+  };
 
-        axios
-        .post(process.env.REACT_APP_API_URL + "/lists", { name, tasks, status, isPrivate: true }, {withCredentials: true})
-        .then(() => {
-          // REFRESH THE LISTS
-          this.props.getData();
-  
-          // RESET THE FROM STATE
-          this.setState({
-            name: "",
-            tasks: [],
-            status: "To-do"
-          });
-        })
-        .catch(err => console.log(err))
-    }
+  render() {
+    return (
+      <div>
+        <Navbar />
 
-    handleChange = e => {
-        const { name, value } = e.target;
-    
-        this.setState({ [name]: value });
-      };
+        <h1 className="section-header">CREATE A LIST</h1>
 
-    addTask = e => {
-      e.preventDefault();
+        <div className="new-list-form">
 
-      const task = {
-        text: this.state.newTask,
-        isDone: false
-      }
+        <h3>1. Add all the tasks to include in the list</h3>
+          <form id="new-list-form" onSubmit={this.addTask}>
+            <input
+              type="text"
+              name="newTask"
+              value={this.state.newTask}
+              onChange={this.handleChange}
+            />
+            <button id="add-task-button" type="submit">+</button>
+          </form>
+          {this.state.tasks.length > 0
+            ? this.state.tasks.map(eachTask => {
+                return (
+                  <div>
+                    <p className="new-task">{eachTask.text}</p>
+                  </div>
+                );
+              })
+            : null}
 
-      const tasksCopy = this.state.tasks; //   []
-      tasksCopy.push(task);     //  [ { text: "banana"}  ]
-      
-      this.setState({ tasks: tasksCopy, newTask : "" } )
-    }
-
-    render() {
-        return (
-          <div>
-          <Navbar/>
-        
-            <h1>DASHBOARD</h1>
-
-            <form onSubmit={this.handleSubmit}>
-            <label>Title of the list:</label>
+        <h3>2. Give a name to the list and create it</h3>
+          <form id="new-list-form" onSubmit={this.handleSubmit}>
             <input
               type="text"
               name="name"
@@ -68,31 +93,12 @@ export default class AddNewList extends Component {
               onChange={this.handleChange}
             />
 
-            <button type="submit">Create List</button>
-            </form>
-        
-            <form onSubmit={this.addTask}>
-              <label>Create tasks</label>
-              <input
-                type="text"
-                name="newTask"
-                value={this.state.newTask}
-                onChange={this.handleChange}
+            <button id="submit-button" type="submit">Create list</button>
+          </form>
 
-              />
-              <button type="submit">Add task</button>
-            </form>
-              {this.state.tasks.length > 0
-              ? this.state.tasks.map((eachTask) => {
-                return(
-                  <div>
-                    <p>{eachTask.text}</p>
-                  </div>
-                )
-                })
-                : null
-              }
-          </div>
-        )
-    }
+
+        </div>
+      </div>
+    );
+  }
 }
