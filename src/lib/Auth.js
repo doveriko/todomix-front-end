@@ -55,20 +55,20 @@ class AuthProvider extends React.Component {
         this.setState({ isLoggedIn: true, user: user, isLoading: false })
       )
       .catch(err =>
-        this.setState({ isLoggedIn: false, user: null, isLoading: true })
+        this.setState({ isLoggedIn: false, user: null, isLoading: false })
       );
   }
 
-  signup = (username, password, email,  name, surname) => {
+  signup = (username, password, email, name, surname) => {
     authService
-      .signup(username, password, email,  name, surname)
+      .signup(username, password, email, name, surname)
       .then(user => this.setState({ isLoggedIn: true, user }))
       .catch(err => console.log(err));
   };
 
   login = (username, password) => {
     authService
-      .login( username, password )
+      .login(username, password)
       .then(user => this.setState({ isLoggedIn: true, user }))
       .catch(err => console.log(err));
   };
@@ -86,7 +86,7 @@ class AuthProvider extends React.Component {
 
     return (
       <Provider value={{ isLoading, isLoggedIn, user, login, logout, signup }}>
-        {this.props.children}
+        {isLoading ? "loading" : this.props.children}
       </Provider>
     );
     /*

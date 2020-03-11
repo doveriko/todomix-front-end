@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../lib/Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFolderPlus, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faFolderPlus, faSignOutAlt, faColumns } from "@fortawesome/free-solid-svg-icons";
 
 class Navbar extends Component {
   render() {
@@ -12,21 +12,21 @@ class Navbar extends Component {
       <nav className="navbar">
         <div>
           <Link to={"/"}>
-            <FontAwesomeIcon icon={faFolderPlus} id="navbar-btn" />
+            <FontAwesomeIcon icon={faColumns} id="navbar-btn" />
           </Link>
         </div>
         <div>
           <Link to="/new-list" id="home-btn">
-            <FontAwesomeIcon icon={faFolderPlus} id="home-btn" />
+            <FontAwesomeIcon icon={faFolderPlus} id="navbar-btn" />
           </Link>
         </div>
-        <div>
-          <p className="logout-text">Hello {user.name}</p>
+        <div className="logout-hello">
           <FontAwesomeIcon
             icon={faSignOutAlt}
             onClick={logout}
-            id="navbar-btn"
+            id="navbar-btn2"
           />
+          <p className="logout-text">Hi {user.name}</p>
         </div>
       </nav>
     );

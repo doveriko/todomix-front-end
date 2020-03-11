@@ -22,15 +22,7 @@ export default class AddNewList extends Component {
         { withCredentials: true }
       )
       .then(() => {
-        // REFRESH THE LISTS
-        this.props.getData();
-
-        // RESET THE FROM STATE
-        this.setState({
-          name: "",
-          tasks: [],
-          status: "To-do"
-        });
+        this.props.history.push("/dashboard");
       })
       .catch(err => console.log(err));
   };
@@ -63,8 +55,7 @@ export default class AddNewList extends Component {
         <h1 className="section-header">CREATE A LIST</h1>
 
         <div className="new-list-form">
-
-        <h3>1. Add all the tasks to include in the list</h3>
+          <h3>1. Add all the tasks to include in the list</h3>
           <form id="new-list-form" onSubmit={this.addTask}>
             <input
               type="text"
@@ -72,7 +63,9 @@ export default class AddNewList extends Component {
               value={this.state.newTask}
               onChange={this.handleChange}
             />
-            <button id="add-task-button" type="submit">+</button>
+            <button id="add-task-button" type="submit">
+              +
+            </button>
           </form>
           {this.state.tasks.length > 0
             ? this.state.tasks.map(eachTask => {
@@ -84,7 +77,7 @@ export default class AddNewList extends Component {
               })
             : null}
 
-        <h3>2. Give a name to the list and create it</h3>
+          <h3>2. Give a name to the list and create it</h3>
           <form id="new-list-form" onSubmit={this.handleSubmit}>
             <input
               type="text"
@@ -93,10 +86,10 @@ export default class AddNewList extends Component {
               onChange={this.handleChange}
             />
 
-            <button id="submit-button" type="submit">Create list</button>
+            <button id="submit-button" type="submit">
+              Create list
+            </button>
           </form>
-
-
         </div>
       </div>
     );

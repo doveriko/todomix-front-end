@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 class EditList extends Component {
   state = {
@@ -61,28 +62,55 @@ class EditList extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleFormUpdateSubmit}>
-          {/* <form onSubmit={() => console.log("CLIK SUBMIT")}> */}
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
+        <Navbar />
 
-          <label>Status:</label>
+        <h1 className="section-header">EDIT A LIST</h1>
 
-          <input
-            name="status"
-            value={this.state.status}
-            onChange={this.handleChange}
-          />
+        <div className="new-list-form">
+          <form id="edit-list-form" onSubmit={this.handleFormUpdateSubmit}>
+            {/* <form onSubmit={() => console.log("CLIK SUBMIT")}> */}
+            <label>Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
 
-          <button type="button" onClick={this.handleFormUpdateSubmit}>
-            EDIT LIST
-          </button>
-        </form>
+            <label>Tasks:</label>
+            {this.state.tasks.length > 0
+              ? this.state.tasks.map(eachTask => {
+                  return (
+                    <div>
+                      <input
+                        type="text"
+                        name="text"
+                        className="new-task"
+                        value={eachTask.text}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                  );
+                })
+              : null}
+
+            <label>Status:</label>
+
+            <input
+              name="status"
+              value={this.state.status}
+              onChange={this.handleChange}
+            />
+
+            <button
+              id="submit-button"
+              type="button"
+              onClick={this.handleFormUpdateSubmit}
+            >
+              EDIT LIST
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

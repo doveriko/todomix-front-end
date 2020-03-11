@@ -3,15 +3,20 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 class SelectedList extends Component {
-  // deleteList = () => {
-  //   const listId = this.props.match.params.id;
-  //   axios
-  //     .delete(process.env.REACT_APP_API_URL + `/lists/${listId}`, {
-  //       withCredentials: true
-  //     })
-  //     .then(() => this.props.history.push("/dashboard"))
-  //     .catch(err => console.log(err));
-  // };
+
+  deleteList = () => {
+    const listId = this.props.oneList._id;
+    axios
+      .delete(process.env.REACT_APP_API_URL + `/lists/${listId}`, {
+        withCredentials: true
+      })
+      .then(() => {
+        // when delete is done, we have to call getAllLists from Dashboard
+        this.props.refreshLists()
+        
+      })
+      .catch(err => console.log(err));
+  };
 
   render() {
     const { oneList } = this.props;
@@ -39,7 +44,7 @@ class SelectedList extends Component {
               <Link to={`/list/${oneList._id}`}>
                 <button id="edit-button">EDIT</button>
               </Link>
-              <button id="delete-button" onClick={() => this.deleteList(oneList)}>DELETE</button>
+              <button id="delete-button" onClick={() => this.deleteList()}>DELETE</button>
             </div>
           </div>
         )}

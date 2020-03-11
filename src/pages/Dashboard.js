@@ -38,7 +38,7 @@ export class Dashboard extends Component {
         <h1 className="section-header">DASHBOARD</h1>
 
         {this.state.allLists.length < 1 ? (
-          <h1 id="select-one-list">Create your first list!</h1>
+          <h1 id="create-first">Create your first list!</h1>
         ) : (
           <div id="dashboard-display">
             <div className="row">
@@ -52,7 +52,7 @@ export class Dashboard extends Component {
               </div>
               <div className="column">
                 <div id="selectedList-column">
-                  <SelectedList oneList={this.state.selectedList} />
+                  <SelectedList oneList={this.state.selectedList} refreshLists={this.getAllLists} />
                 </div>
               </div>
             </div>

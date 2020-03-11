@@ -32,23 +32,38 @@ nav.navbar {
 }
 
 .logout-text {
-  display: inline-block;
   font-size: 15px;
-  margin-right: 1em;
-  margin-bottom: 1em;
   font-family: "Ubuntu", Verdana, Geneva, Tahoma, sans-serif;
   color: #252A37;
+  margin: 0px;
+  padding-bottom: 10px;
+}
+
+.logout-hello {
+  margin-top: 10px;
+  text-align: right;
+  margin-bottom: 0px;
 }
 
 #navbar-btn {
   padding-top: 15px;
-  color: #252A37;
+  color: #252a37;
   font-size: 30px;
 }
 
 #navbar-btn:hover {
   color: #F4D549;
-  size: 80px;
+}
+
+#navbar-btn2 {
+  color: #252A37;
+  align-items: right;
+  font-size: 25px;
+  padding-left: 40px;
+}
+
+#navbar-btn2:hover {
+  color: #F4D549;
 }
 
 /*--------------- Home ---------------*/
@@ -186,6 +201,13 @@ nav.navbar {
   flex: 1;
 }
 
+#create-first{
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Ubuntu';
+  color: lightgray;
+}
+
 #allLists-column {
   padding: 10px;
 }
@@ -238,7 +260,8 @@ nav.navbar {
 }
 
 #edit-button {
-  background-color: rgb(117, 117, 117);;
+  background-color: rgb(117, 117, 117);
+  ;
   margin: 10px;
   border: 1px;
   padding: 15px 25px;
@@ -273,7 +296,7 @@ nav.navbar {
   padding: 20px;
 }
 
-.new-list-form h3{
+.new-list-form h3 {
   font-family: 'Ubuntu';
   font-size: 15px;
   text-align: center;
@@ -335,4 +358,16 @@ nav.navbar {
   border: 1px solid #252A37;
   padding: 10px;
   background-color: rgb(117, 117, 117);
+}
+
+.edit-list-form {
+  width: 70vw;
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #9e9ea3;
+  border-radius: 3px;
+  padding: 20px;
 }
