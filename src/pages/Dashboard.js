@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Route, Switch, Link } from "react-router-dom";
 import { withAuth } from "../lib/Auth";
 import axios from "axios";
 
@@ -16,6 +15,10 @@ export class Dashboard extends Component {
   setSelectedList = oneList => {
     this.setState({ selectedList: oneList });
   };
+
+  resetSelectedList = () => {
+    this.setState( {selectedList: null} );
+  }
 
   getAllLists = () => {
     axios
@@ -52,7 +55,11 @@ export class Dashboard extends Component {
               </div>
               <div className="column">
                 <div id="selectedList-column">
-                  <SelectedList oneList={this.state.selectedList} refreshLists={this.getAllLists} />
+                  <SelectedList
+                    oneList={this.state.selectedList}
+                    refreshLists={this.getAllLists}
+                    resetSelectedList={this.resetSelectedList}
+                  />
                 </div>
               </div>
             </div>

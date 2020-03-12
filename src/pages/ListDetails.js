@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import EditList from "./EditList"
 import Navbar from '../components/Navbar';
 
 class ListDetails extends Component {
@@ -33,7 +32,10 @@ class ListDetails extends Component {
 
       axios
       .delete(process.env.REACT_APP_API_URL + `/lists/${id}`, {withCredentials: true})
-      .then(() => this.props.history.push("/dashboard"))
+      .then(() => {
+        this.props.history.push("/dashboard")
+        this.getSingleList();
+      })
       .catch(err => console.log(err))
   };
 

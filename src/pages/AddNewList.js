@@ -54,7 +54,7 @@ export default class AddNewList extends Component {
 
         <h1 className="section-header">CREATE A LIST</h1>
 
-        <div className="new-list-form">
+        <div className="display-form">
           <h3>1. Add all the tasks to include in the list</h3>
           <form id="new-list-form" onSubmit={this.addTask}>
             <input

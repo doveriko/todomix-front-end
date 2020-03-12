@@ -7,21 +7,22 @@ class EditList extends Component {
     _id: undefined,
     name: "",
     tasks: [],
+    //taskToEdit: "",
     status: "To-do"
   };
 
   componentDidMount() {
-    // <PrivateRoute exact path="/list/:id" component={EditList} />
     //   : ->>>  this.props.match.params.
     //          this.props.match.params.id
-    //
     const listId = this.props.match.params.id;
+
     axios
       .get(process.env.REACT_APP_API_URL + `/lists/${listId}`, {
         withCredentials: true
       })
       .then(response => {
         const oneList = response.data;
+        console.log("oneList :", oneList);
         this.setState({
           _id: oneList._id,
           tasks: oneList.tasks,
@@ -53,10 +54,24 @@ class EditList extends Component {
   };
 
   handleChange = event => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-    //                 ▲   Assign value to property using "object bracket notataion"
-    //  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors
+    const { name, value, id } = event.target;
+
+    // if input is an item in the tasks array, we create a new task object which text property corresponds to the new value entered by the user
+    if (name === "taskToEdit") {
+      const task = {
+        text: value,
+        isDone: false
+      };
+
+      // Create a copy of the task array...
+      const tasksCopy = [...this.state.tasks];
+      // ... and we replace the edited task with the new task created
+      tasksCopy.splice(id, 1, task);
+
+      this.setState({ tasks: tasksCopy });
+    } else {
+      this.setState({ [name]: value });
+    }
   };
 
   render() {
@@ -66,26 +81,28 @@ class EditList extends Component {
 
         <h1 className="section-header">EDIT A LIST</h1>
 
-        <div className="new-list-form">
+        <div className="display-form">
           <form id="edit-list-form" onSubmit={this.handleFormUpdateSubmit}>
             {/* <form onSubmit={() => console.log("CLIK SUBMIT")}> */}
             <label>Name:</label>
             <input
               type="text"
               name="name"
+              className="edit-task"
               value={this.state.name}
               onChange={this.handleChange}
             />
 
             <label>Tasks:</label>
             {this.state.tasks.length > 0
-              ? this.state.tasks.map(eachTask => {
+              ? this.state.tasks.map((eachTask, index) => {
                   return (
                     <div>
                       <input
+                        id={index}
                         type="text"
-                        name="text"
-                        className="new-task"
+                        name="taskToEdit"
+                        className="edit-task"
                         value={eachTask.text}
                         onChange={this.handleChange}
                       />
@@ -93,22 +110,15 @@ class EditList extends Component {
                   );
                 })
               : null}
-
-            <label>Status:</label>
-
-            <input
-              name="status"
-              value={this.state.status}
-              onChange={this.handleChange}
-            />
-
-            <button
-              id="submit-button"
-              type="button"
-              onClick={this.handleFormUpdateSubmit}
-            >
-              EDIT LIST
-            </button>
+            <div id="center-button">
+              <button
+                id="submit-button"
+                type="button"
+                onClick={this.handleFormUpdateSubmit}
+              >
+                EDIT LIST
+              </button>
+            </div>
           </form>
         </div>
       </div>

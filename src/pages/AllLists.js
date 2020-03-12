@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const AllLists = props => {
   return (
@@ -13,7 +12,7 @@ const AllLists = props => {
               props.setSelectedList(list);
             }}
           >
-            <Link className="text-decoration-none">{list.name}</Link>
+            <p className="text-decoration-none">{list.name}</p>
           </div>
         );
       })}

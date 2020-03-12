@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 class SelectedList extends Component {
-
   deleteList = () => {
     const listId = this.props.oneList._id;
     axios
@@ -12,8 +11,8 @@ class SelectedList extends Component {
       })
       .then(() => {
         // when delete is done, we have to call getAllLists from Dashboard
-        this.props.refreshLists()
-        
+        this.props.refreshLists();
+        this.props.resetSelectedList();
       })
       .catch(err => console.log(err));
   };
@@ -44,7 +43,9 @@ class SelectedList extends Component {
               <Link to={`/list/${oneList._id}`}>
                 <button id="edit-button">EDIT</button>
               </Link>
-              <button id="delete-button" onClick={() => this.deleteList()}>DELETE</button>
+              <button id="delete-button" onClick={() => this.deleteList()}>
+                DELETE
+              </button>
             </div>
           </div>
         )}

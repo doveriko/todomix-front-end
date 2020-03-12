@@ -261,7 +261,6 @@ nav.navbar {
 
 #edit-button {
   background-color: rgb(117, 117, 117);
-  ;
   margin: 10px;
   border: 1px;
   padding: 15px 25px;
@@ -284,7 +283,7 @@ nav.navbar {
   background-color: rgb(219, 45, 45);
 }
 
-.new-list-form {
+.display-form {
   width: 70vw;
   margin: 0 auto;
   text-align: left;
@@ -296,7 +295,7 @@ nav.navbar {
   padding: 20px;
 }
 
-.new-list-form h3 {
+.display-form h3 {
   font-family: 'Ubuntu';
   font-size: 15px;
   text-align: center;
@@ -309,6 +308,27 @@ nav.navbar {
 }
 
 #new-list-form input {
+  border: none;
+  margin: 10px;
+  height: 25px;
+  width: 150px;
+  border-radius: 2px;
+  padding-left: 10px;
+}
+
+#edit-list-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+#edit-list-form label {
+  font-family: 'Ubuntu';
+  font-size: 15px;
+}
+
+#edit-list-form input {
   border: none;
   margin: 10px;
   height: 25px;
@@ -354,10 +374,18 @@ nav.navbar {
 .new-task {
   font-family: "Ubuntu";
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   border: 1px solid #252A37;
   padding: 10px;
   background-color: rgb(117, 117, 117);
+}
+
+.edit-task {
+  font-family: "Ubuntu";
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid #252A37;
+  padding: 5px;
 }
 
 .edit-list-form {
@@ -370,4 +398,9 @@ nav.navbar {
   background-color: #9e9ea3;
   border-radius: 3px;
   padding: 20px;
+}
+
+#center-button {
+  display: flex;
+  margin: 0 auto;
 }
