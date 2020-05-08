@@ -6,7 +6,6 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import EditList from "./pages/EditList";
 import AddNewList from "./pages/AddNewList";
-// import Private from "./pages/Private"
 
 import AnonRoute from "./components/AnonRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -32,3 +31,4 @@ class App extends Component {
 }
 
 export default App;
+  

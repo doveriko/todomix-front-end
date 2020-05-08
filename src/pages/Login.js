@@ -49,10 +49,6 @@ class Login extends Component {
             />
 
             <input type="submit" id="login-button" value="LOG IN" />
-
-            {/* <Link to="/dashboard" className="button-text">
-            <input type="submit" className="login-button" value="LOG IN"/>
-          </Link> */}
           </form>
         </div>
 

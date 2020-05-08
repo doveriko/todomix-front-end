@@ -6,11 +6,11 @@ export default class AddNewList extends Component {
   state = {
     name: "",
     status: "To-do",
-    newTask: "",
-    tasks: []
+    tasks: [],
+    newTasks: [],
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const { name, tasks, status } = this.state;
@@ -24,27 +24,49 @@ export default class AddNewList extends Component {
       .then(() => {
         this.props.history.push("/dashboard");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  handleChange = e => {
-    const { name, value } = e.target;
+  handleChange = (e) => {
+    const { name, value, id } = e.target;
 
-    this.setState({ [name]: value });
+    if (name === "newTask") {
+      const task = {
+        text: value,
+        isDone: false,
+      };
+
+      const tasksCopy = [...this.state.tasks];
+      tasksCopy.splice(id, 1, task);
+
+      this.setState({ tasks: tasksCopy });
+    } else {
+      this.setState({ [name]: value });
+    }
+    console.log(this.state.tasks);
   };
 
-  addTask = e => {
-    e.preventDefault();
+  // addTask = (e) => {
+  //   e.preventDefault();
 
-    const task = {
-      text: this.state.newTask,
-      isDone: false
-    };
+  //   const task = {
+  //     text: this.state.newTask,
+  //     isDone: false,
+  //   };
 
-    const tasksCopy = this.state.tasks; //   []
-    tasksCopy.push(task); //  [ { text: "banana"}  ]
+  //   const tasksCopy = this.state.tasks;
+  //   tasksCopy.push(task);
 
-    this.setState({ tasks: tasksCopy, newTask: "" });
+  //   this.setState({ tasks: tasksCopy, newTask: "" });
+  // };
+
+  newInput = (e) => {
+    this.setState({ newTasks: [...this.state.newTasks, ""] });
+  };
+
+  handleRemove = (index) => {
+    this.state.newTasks.splice(index, 1);
+    this.setState({ newTasks: this.state.newTasks });
   };
 
   render() {
@@ -55,7 +77,43 @@ export default class AddNewList extends Component {
         <h1 className="section-header">CREATE A LIST</h1>
 
         <div className="display-form">
-          <h3>1. Add all the tasks to include in the list</h3>
+          <label>Title:</label>
+          <input
+            type="text"
+            name="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
+
+          <button onClick={(e) => this.newInput(e)}>Add task</button>
+
+          <label>Tasks:</label>
+          {this.state.newTasks.length > 0
+            ? this.state.newTasks.map((task, index) => {
+                return (
+                  <div className="new-task" key={index}>
+                    <input
+                      id={index}
+                      type="text"
+                      name="newTask"
+                      value={task.text}
+                      onChange={this.handleChange}
+                    />
+                    <button onClick={(e) => this.handleRemove(index)}>
+                      Remove task
+                    </button>
+                  </div>
+                );
+              })
+            : null}
+
+          {/* <button id="add-task-button" onClick={(e) => this.addTask(e)}>
+            Add task
+            </button> */}
+
+          <button onClick={this.handleSubmit}>DALE</button>
+
+          {/* <h3>1. Add all the tasks to include in the list</h3>
           <form id="new-list-form" onSubmit={this.addTask}>
             <input
               type="text"
@@ -89,7 +147,7 @@ export default class AddNewList extends Component {
             <button id="submit-button" type="submit">
               Create list
             </button>
-          </form>
+          </form> */}
         </div>
       </div>
     );

@@ -29,7 +29,7 @@ class SelectedList extends Component {
             <h1 className="list-title">{oneList.name}</h1>
 
             <div>
-              {oneList.tasks.length > 0
+              {oneList.length > 0
                 ? oneList.tasks.map((eachTask, index) => {
                     return (
                       <h3 className="list-task" key={eachTask._id}>
@@ -49,9 +49,6 @@ class SelectedList extends Component {
             </div>
           </div>
         )}
-
-        {/* <div>
-            </div>  */}
       </div>
     );
   }
