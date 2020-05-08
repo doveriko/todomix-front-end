@@ -7,14 +7,13 @@ class SelectedList extends Component {
     const listId = this.props.oneList._id;
     axios
       .delete(process.env.REACT_APP_API_URL + `/lists/${listId}`, {
-        withCredentials: true
+        withCredentials: true,
       })
       .then(() => {
-        // when delete is done, we have to call getAllLists from Dashboard
         this.props.refreshLists();
         this.props.resetSelectedList();
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   render() {
@@ -29,16 +28,15 @@ class SelectedList extends Component {
             <h1 className="list-title">{oneList.name}</h1>
 
             <div>
-              {oneList.length > 0
-                ? oneList.tasks.map((eachTask, index) => {
-                    return (
-                      <h3 className="list-task" key={eachTask._id}>
-                        {eachTask.text}
-                      </h3>
-                    );
-                  })
-                : null}
+              {oneList.tasks.map((eachTask) => {
+                return (
+                  <h3 className="list-task" key={eachTask._id}>
+                    {eachTask.text}
+                  </h3>
+                );
+              })}
             </div>
+
             <div className="twobuttons">
               <Link to={`/list/${oneList._id}`}>
                 <button id="edit-button">EDIT</button>
@@ -47,6 +45,7 @@ class SelectedList extends Component {
                 DELETE
               </button>
             </div>
+            
           </div>
         )}
       </div>
