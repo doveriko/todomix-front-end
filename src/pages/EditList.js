@@ -7,14 +7,18 @@ class EditList extends Component {
     _id: undefined,
     name: "",
     tasks: [],
+    newTasks: [],
     status: "To-do",
+    showAddTaskForm: false,
   };
 
   componentDidMount() {
     const listId = this.props.match.params.id;
 
     axios
-      .get(process.env.REACT_APP_API_URL + `/lists/${listId}`, {withCredentials: true})
+      .get(process.env.REACT_APP_API_URL + `/lists/${listId}`, {
+        withCredentials: true,
+      })
       .then((response) => {
         const oneList = response.data;
         this.setState({
@@ -22,6 +26,7 @@ class EditList extends Component {
           tasks: oneList.tasks,
           name: oneList.name,
           status: oneList.status,
+          isPrivate: oneList.isPrivate
         });
       })
       .catch((err) => console.log(err));
@@ -29,10 +34,14 @@ class EditList extends Component {
 
   handleFormUpdateSubmit = (event) => {
     event.preventDefault();
-    const { name, tasks, status, _id } = this.state;
+    const { name, tasks, status, isPrivate, _id } = this.state;
 
     axios
-      .put(process.env.REACT_APP_API_URL + `/lists/${_id}`, {name, tasks, status}, { withCredentials: true })
+      .put(
+        process.env.REACT_APP_API_URL + `/lists/${_id}`,
+        { name, tasks, status, isPrivate },
+        { withCredentials: true }
+      )
       .then(() => {
         this.props.history.push("/dashboard");
       })
@@ -60,6 +69,19 @@ class EditList extends Component {
     }
   };
 
+  handleRemove = (e, index) => {
+    this.state.tasks.splice(index, 1);
+    this.setState({ tasks: this.state.tasks });
+  };
+
+  toggleAddTaskForm = () => {
+    this.setState({ showAddTaskForm: !this.state.showAddTaskForm });
+  };
+
+  newInput = (e) => {
+    this.setState({ tasks: [...this.state.tasks, ""] });
+  };
+
   render() {
     return (
       <div>
@@ -67,44 +89,69 @@ class EditList extends Component {
 
         <h1 className="section-header">EDIT A LIST</h1>
 
-        <div className="display-form">
-          <form id="edit-list-form" onSubmit={this.handleFormUpdateSubmit}>
-            <label>Name:</label>
-            <input
-              type="text"
-              name="name"
-              className="edit-task"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
+        <div className="display-form" id="edit-list-form">
+          {/* <form id="edit-list-form" onSubmit={this.handleFormUpdateSubmit}> */}
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            className="edit-task"
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
 
-            <label>Tasks:</label>
-            {this.state.tasks.length > 0
-              ? this.state.tasks.map((eachTask, index) => {
-                  return (
-                    <div>
-                      <input
-                        id={index}
-                        type="text"
-                        name="taskToEdit"
-                        className="edit-task"
-                        value={eachTask.text}
-                        onChange={this.handleChange}
-                      />
-                    </div>
-                  );
-                })
-              : null}
-            <div id="center-button">
-              <button
-                id="submit-button"
-                type="button"
-                onClick={this.handleFormUpdateSubmit}
-              >
-                EDIT LIST
-              </button>
-            </div>
-          </form>
+          {this.state.newTasks.length > 0
+            ? this.state.newTasks.map((task, index) => {
+                return (
+                  <div className="new-task" key={index}>
+                    <input
+                      id={index}
+                      type="text"
+                      name="newTask"
+                      value={task.text}
+                      onChange={this.handleChange}
+                    />
+                    <button onClick={(e) => this.handleRemove(index)}>
+                      Remove task
+                    </button>
+                  </div>
+                );
+              })
+            : null}
+
+          <label>Tasks:</label>
+          {this.state.tasks.length > 0
+            ? this.state.tasks.map((eachTask, index) => {
+                return (
+                  <div key={index}>
+                    <input
+                      id={index}
+                      type="text"
+                      name="taskToEdit"
+                      className="edit-task"
+                      value={eachTask.text}
+                      onChange={this.handleChange}
+                    />
+                    <button onClick={(e) => this.handleRemove(index)}>
+                      Remove task
+                    </button>
+                  </div>
+                );
+              })
+            : null}
+
+          <button onClick={(e) => this.newInput(e)}>Add task</button>
+
+          <div id="center-button">
+            <button
+              id="submit-button"
+              type="button"
+              onClick={this.handleFormUpdateSubmit}
+            >
+              EDIT LIST
+            </button>
+          </div>
+          {/* </form> */}
         </div>
       </div>
     );

@@ -1,9 +1,9 @@
 import React from "react";
 
-const AllLists = props => {
+const AllLists = (props) => {
   return (
     <div>
-      {props.allLists.map(list => {
+      {props.allLists.map((list) => {
         return (
           <div
             key={list._id}
@@ -12,7 +12,11 @@ const AllLists = props => {
               props.setSelectedList(list);
             }}
           >
-            <p className="text-decoration-none">{list.name}</p>
+            {list.name ? (
+              <p className="text-decoration-none">{list.name}</p>
+            ) : (
+              <p className="text-decoration-none">Unnamed list</p>
+            )}
           </div>
         );
       })}

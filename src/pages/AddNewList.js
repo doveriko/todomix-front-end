@@ -46,20 +46,6 @@ export default class AddNewList extends Component {
     console.log(this.state.tasks);
   };
 
-  // addTask = (e) => {
-  //   e.preventDefault();
-
-  //   const task = {
-  //     text: this.state.newTask,
-  //     isDone: false,
-  //   };
-
-  //   const tasksCopy = this.state.tasks;
-  //   tasksCopy.push(task);
-
-  //   this.setState({ tasks: tasksCopy, newTask: "" });
-  // };
-
   newInput = (e) => {
     this.setState({ newTasks: [...this.state.newTasks, ""] });
   };
@@ -100,7 +86,7 @@ export default class AddNewList extends Component {
                       onChange={this.handleChange}
                     />
                     <button onClick={(e) => this.handleRemove(index)}>
-                      Remove task
+                    <i className="fa fa-trash" />
                     </button>
                   </div>
                 );
