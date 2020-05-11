@@ -6,7 +6,7 @@ class SelectedList extends Component {
   state = {
     tasks: [],
     tasksCompleted: 0,
-    showMessage: false
+    showMessage: false,
   };
 
   deleteList = () => {
@@ -36,7 +36,7 @@ class SelectedList extends Component {
     });
     this.setState({
       tasks: list.tasks,
-      tasksCompleted
+      tasksCompleted,
     });
   };
 
@@ -58,32 +58,28 @@ class SelectedList extends Component {
   };
 
   onButtonMessage = () => {
-
-    this.setState({ showMessage: true})
+    this.setState({ showMessage: true });
 
     setTimeout(() => {
       this.setState({ showMessage: false });
     }, 2000);
-
-   };
+  };
 
   render() {
     const { oneList } = this.props;
-    let doneTasks = 0
+    let doneTasks = 0;
 
     return (
       <div>
-
         {!oneList ? (
           <p id="select-one-list">Select one list to display</p>
         ) : (
           <div>
-
-          {oneList.name ? (
-            <h1 className="list-title">{oneList.name}</h1>
-          ) : (
-            <h1 className="list-title">Unnamed list</h1>
-          )}
+            {oneList.name ? (
+              <h1 className="list-title">{oneList.name}</h1>
+            ) : (
+              <h1 className="list-title">Unnamed list</h1>
+            )}
 
             <div>
               {oneList.tasks.map((eachTask) => {
@@ -92,40 +88,65 @@ class SelectedList extends Component {
                     {eachTask.text}
                     {eachTask.isDone ? (
                       <button
+                        className="transparent-button"
                         onClick={() => this.updateTaskStatus(eachTask._id)}
                       >
-                        BOTON CHECK APAGADO
+                        <i className="fa fa-check-square yes"></i>
                       </button>
                     ) : (
                       <button
+                        className="transparent-button"
                         onClick={() => this.updateTaskStatus(eachTask._id)}
                       >
-                        BOTON CHECK ENCENDIDO
+                        <i className="fa fa-check-square no" />
                       </button>
                     )}
                   </h3>
                 );
               })}
-              
-                {this.props.oneList.tasks.forEach((task) => {
-                  if (task.isDone) doneTasks++;
-                })}
 
-              <p>Tasks completed:{doneTasks}</p>
+              {this.props.oneList.tasks.forEach((task) => {
+                if (task.isDone) doneTasks++;
+              })}
+
+              <p id="tasks-completed">
+                Tasks completed: {doneTasks} / {this.props.oneList.tasks.length}
+              </p>
+
+              <div id="save-progress">
+
+              <button
+                className="transparent-button"
+                onClick={() => {
+                  this.updateTasksCompleted();
+                  this.onButtonMessage();
+                }}
+              >
+                <i className="fa fa-save" />
+                <p>SAVE PROGRESS</p>
+              </button>
 
               {this.state.showMessage && <p>Progress saved!</p>}
-      <button onClick={() => {this.updateTasksCompleted(); this.onButtonMessage()}}>Save changes</button>
 
+              </div>
 
-              {/* <button onClick={this.updateTasksCompleted}>Save changes</button> */}
             </div>
 
             <div className="twobuttons">
               <Link to={`/list/${oneList._id}`}>
-                <button id="edit-button">EDIT</button>
+                
+                <button className="transparent-button">
+                <i className="fa fa-edit"></i>
+                  <p>EDIT LIST</p>
+                </button>
               </Link>
-              <button id="delete-button" onClick={() => this.deleteList()}>
-                DELETE
+
+              <button
+                className="transparent-button"
+                onClick={() => this.deleteList()}
+              >
+                <i className="fa fa-trash"></i>
+                <p>DELETE LIST</p>
               </button>
             </div>
           </div>

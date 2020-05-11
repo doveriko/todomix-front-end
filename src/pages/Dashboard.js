@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withAuth } from "../lib/Auth";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import AllLists from "./AllLists";
@@ -9,25 +10,25 @@ import SelectedList from "../components/SelectedList";
 export class Dashboard extends Component {
   state = {
     allLists: [],
-    selectedList: null
+    selectedList: null,
   };
 
-  setSelectedList = oneList => {
+  setSelectedList = (oneList) => {
     this.setState({ selectedList: oneList });
   };
 
   resetSelectedList = () => {
-    this.setState( {selectedList: null} );
-  }
+    this.setState({ selectedList: null });
+  };
 
   getAllLists = () => {
     axios
       .get(process.env.REACT_APP_API_URL + "/lists", { withCredentials: true })
-      .then(response => {
+      .then((response) => {
         const allLists = response.data;
         this.setState({ allLists: allLists });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   componentDidMount() {
@@ -41,7 +42,14 @@ export class Dashboard extends Component {
         <h1 className="section-header">DASHBOARD</h1>
 
         {this.state.allLists.length < 1 ? (
-          <h1 id="create-first">Create your first list!</h1>
+          <div>
+            <br />
+            <h1 className="signup-text">
+              Your dashboard is empty!
+              <br />
+              <Link to="/new-list">Create a list here</Link>
+            </h1>
+          </div>
         ) : (
           <div id="dashboard-display">
             <div className="row">

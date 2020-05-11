@@ -1,5 +1,4 @@
 /*--------------- Fonts ---------------*/
-@import url('https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Permanent+Marker&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
 /*--------------- General settings ---------------*/
@@ -154,14 +153,14 @@ nav.navbar {
 .signup-text {
   color: lightgray;
   text-align: center;
-  font-size: 30px;
-  font-family: 'East Sea Dokdo';
+  font-size: 22px;
+  font-family: "Ubuntu", Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .signup-text a {
   color: #F4D549;
   text-decoration: none;
-  font-family: 'East Sea Dokdo';
+  font-family: "Ubuntu", Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #signup-button {
@@ -255,8 +254,9 @@ nav.navbar {
   margin: 0 auto;
   text-align: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   list-style-type: none;
+  padding-top: 1rem;
 }
 
 #edit-button {
@@ -403,4 +403,47 @@ nav.navbar {
 #center-button {
   display: flex;
   margin: 0 auto;
+}
+
+.transparent-button {
+  background-color: transparent;
+  border: none;
+}
+
+.fa {
+  font-size: 1.5rem;
+  color: #252A37;
+}
+
+.no {
+  color: rgb(117, 117, 117);
+}
+
+.yes {
+  color: green
+}
+
+#save-progress {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+
+#save-progress p {
+  margin: 0 auto;
+  padding: 1em;
+  color: #252A37;
+  font-family: "Ubuntu", Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#tasks-completed {
+  font-size: 1rem;
+  color: #252A37;
+  font-family: "Ubuntu", Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  padding: 1rem;
+}
+
+.fa-trash {
+color: rgb(187, 104, 104);
 }
