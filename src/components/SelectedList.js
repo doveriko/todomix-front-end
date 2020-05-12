@@ -76,9 +76,9 @@ class SelectedList extends Component {
         ) : (
           <div>
             {oneList.name ? (
-              <h1 className="list-title">{oneList.name}</h1>
+              <h2 className="list-title">{oneList.name}</h2>
             ) : (
-              <h1 className="list-title">Unnamed list</h1>
+              <h2 className="list-title">Unnamed list</h2>
             )}
 
             <div>

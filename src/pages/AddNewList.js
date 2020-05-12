@@ -63,21 +63,29 @@ export default class AddNewList extends Component {
         <h1 className="section-header">CREATE A LIST</h1>
 
         <div className="display-form">
-          <label>Title:</label>
-          <input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
+          <label>Name:</label>
 
-          <button onClick={(e) => this.newInput(e)}>Add task</button>
+          <div className="new-list-form">
+            <input
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
+          </div>
 
-          <label>Tasks:</label>
+          <label>Add tasks:</label>
+          <br />
+          <button
+            className="transparent-button"
+            onClick={(e) => this.newInput(e)}
+          >
+            <i className="fa fa-plus-circle"></i>
+          </button>
           {this.state.newTasks.length > 0
             ? this.state.newTasks.map((task, index) => {
                 return (
-                  <div className="new-task" key={index}>
+                  <div className="new-list-form" key={index}>
                     <input
                       id={index}
                       type="text"
@@ -85,16 +93,19 @@ export default class AddNewList extends Component {
                       value={task.text}
                       onChange={this.handleChange}
                     />
-                    <button onClick={(e) => this.handleRemove(index)} className="transparent-button">
-                    <i className="fa fa-trash" />
+                    <button
+                      onClick={(e) => this.handleRemove(index)}
+                      className="transparent-button"
+                    >
+                      <i className="fa fa-trash" />
                     </button>
                   </div>
                 );
               })
             : null}
-
-          <button onClick={this.handleSubmit}>DALE</button>
-
+          <br/>
+          <br/>
+          <button id="login-button" onClick={this.handleSubmit}>CREATE LIST</button>
         </div>
       </div>
     );

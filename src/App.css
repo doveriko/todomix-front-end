@@ -101,14 +101,16 @@ nav.navbar {
 
 #login-button {
   background-color: #F4D549;
-  width: 80px;
-  height: 60px;
+  width: 100px;
+  height: 50px;
+  border: 0px;
+  border-radius: 10px;
   color: #252A37;
   font-size: 15px;
   font-family: 'Ubuntu';
   text-decoration: none;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto
+  
 }
 
 /*--------------- Sign up ---------------*/
@@ -131,8 +133,9 @@ nav.navbar {
 .signup-form {
   height: 55vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-evenly;
+  text-align: center;
 }
 
 .signup-form input {
@@ -153,7 +156,7 @@ nav.navbar {
 .signup-text {
   color: lightgray;
   text-align: center;
-  font-size: 22px;
+  font-size: 18px;
   font-family: "Ubuntu", Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -163,25 +166,13 @@ nav.navbar {
   font-family: "Ubuntu", Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#signup-button {
-  background-color: #F4D549;
-  width: 85px;
-  height: 60px;
-  color: #252A37;
-  font-size: 15px;
-  font-family: 'Ubuntu';
-  text-decoration: none;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /*--------------- AllLists ---------------*/
 
 #dashboard-display {
   margin: auto;
-  width: 90vw;
+  width: 92vw;
   height: 80vh;
-  background-color: #9e9ea3;
+  background-color:#9e9ea3;
   border-radius: 3px;
   overflow: "scroll";
 }
@@ -193,11 +184,20 @@ nav.navbar {
   width: 100%;
 }
 
-.column {
+.column1 {
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
+  max-width: 30vw;
+}
+
+.column2 {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  
 }
 
 #create-first{
@@ -208,11 +208,11 @@ nav.navbar {
 }
 
 #allLists-column {
-  padding: 10px;
+  padding: 5px;
 }
 
 #selectedList-column {
-  padding: 10px;
+  padding: 5px;
   height: 100px;
 }
 
@@ -259,30 +259,6 @@ nav.navbar {
   padding-top: 1rem;
 }
 
-#edit-button {
-  background-color: rgb(117, 117, 117);
-  margin: 10px;
-  border: 1px;
-  padding: 15px 25px;
-  border-radius: 3px;
-}
-
-#edit-button:hover {
-  background-color: rgb(85, 85, 85);
-}
-
-#delete-button {
-  background-color: rgb(187, 104, 104);
-  margin: 10px;
-  border: 1px;
-  padding: 15px 18px;
-  border-radius: 3px;
-}
-
-#delete-button:hover {
-  background-color: rgb(219, 45, 45);
-}
-
 .display-form {
   width: 70vw;
   margin: 0 auto;
@@ -295,25 +271,27 @@ nav.navbar {
   padding: 20px;
 }
 
-.display-form h3 {
+.display-form label {
   font-family: 'Ubuntu';
   font-size: 15px;
   text-align: center;
 }
 
-#new-list-form {
+.new-list-form {
   display: flex;
   flex-direction: row;
+  margin: 0 auto;
   justify-content: center;
 }
 
-#new-list-form input {
+.new-list-form input {
   border: none;
   margin: 10px;
   height: 25px;
   width: 150px;
   border-radius: 2px;
   padding-left: 10px;
+  text-align: center;
 }
 
 #edit-list-form {
@@ -337,49 +315,6 @@ nav.navbar {
   padding-left: 10px;
 }
 
-#add-task-button {
-  background-color: #252A37;
-  border: none;
-  margin: 10px;
-  height: 25px;
-  width: 25px;
-  border-radius: 2px;
-  font-size: 20px;
-  text-align: center;
-  color: #9e9ea3;
-}
-
-#add-task-button:hover {
-  background-color: #F4D549;
-  color: #252A37;
-}
-
-#submit-button {
-  background-color: #F4D549;
-  border: none;
-  margin: 10px;
-  height: 30px;
-  width: 80px;
-  border-radius: 2px;
-  font-family: 'Ubuntu';
-  font-size: 12px;
-  color: #252A37;
-}
-
-#submit-button:hover {
-  color: #F4D549;
-  background-color: #252A37;
-}
-
-.new-task {
-  font-family: "Ubuntu";
-  text-align: center;
-  font-size: 14px;
-  border: 1px solid #252A37;
-  padding: 10px;
-  background-color: rgb(117, 117, 117);
-}
-
 .edit-task {
   font-family: "Ubuntu";
   text-align: center;
@@ -398,11 +333,6 @@ nav.navbar {
   background-color: #9e9ea3;
   border-radius: 3px;
   padding: 20px;
-}
-
-#center-button {
-  display: flex;
-  margin: 0 auto;
 }
 
 .transparent-button {

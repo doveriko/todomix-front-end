@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import shortid from "shortid";
 
 class EditList extends Component {
   state = {
@@ -26,7 +27,7 @@ class EditList extends Component {
           tasks: oneList.tasks,
           name: oneList.name,
           status: oneList.status,
-          isPrivate: oneList.isPrivate
+          isPrivate: oneList.isPrivate,
         });
       })
       .catch((err) => console.log(err));
@@ -51,22 +52,31 @@ class EditList extends Component {
   handleChange = (event) => {
     const { name, value, id } = event.target;
 
-    // if input is an item in the tasks array, we create a new task object which text property corresponds to the new value entered by the user
     if (name === "taskToEdit") {
+
+      const task = {
+        text: value,
+      };
+
+      let tasksCopy = [...this.state.tasks];
+      tasksCopy.splice(id, 1, task);
+      this.setState({ tasks: tasksCopy });
+
+    } else if (name === "newTask") {
+
       const task = {
         text: value,
         isDone: false,
       };
 
-      // Create a copy of the task array...
-      const tasksCopy = [...this.state.tasks];
-      // ... and we replace the edited task with the new task created
+      let tasksCopy = [...this.state.newTasks];
       tasksCopy.splice(id, 1, task);
-
       this.setState({ tasks: tasksCopy });
+
     } else {
       this.setState({ [name]: value });
     }
+    console.log(event.target.id);
   };
 
   handleRemove = (e, index) => {
@@ -79,7 +89,7 @@ class EditList extends Component {
   };
 
   newInput = (e) => {
-    this.setState({ tasks: [...this.state.tasks, ""] });
+    this.setState({ newTasks: [...this.state.newTasks, ""] });
   };
 
   render() {
@@ -89,69 +99,77 @@ class EditList extends Component {
 
         <h1 className="section-header">EDIT A LIST</h1>
 
-        <div className="display-form" id="edit-list-form">
-          {/* <form id="edit-list-form" onSubmit={this.handleFormUpdateSubmit}> */}
+        <div className="display-form">
           <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            className="edit-task"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
 
-          {this.state.newTasks.length > 0
-            ? this.state.newTasks.map((task, index) => {
-                return (
-                  <div className="new-task" key={index}>
-                    <input
-                      id={index}
-                      type="text"
-                      name="newTask"
-                      value={task.text}
-                      onChange={this.handleChange}
-                    />
-                    <button onClick={(e) => this.handleRemove(index)}>
-                      Remove task
-                    </button>
-                  </div>
-                );
-              })
-            : null}
+          <div className="new-list-form">
+            <input
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
+          </div>
 
           <label>Tasks:</label>
           {this.state.tasks.length > 0
             ? this.state.tasks.map((eachTask, index) => {
                 return (
-                  <div key={index}>
+                  <div className="new-list-form" key={index}>
                     <input
                       id={index}
                       type="text"
                       name="taskToEdit"
-                      className="edit-task"
                       value={eachTask.text}
                       onChange={this.handleChange}
                     />
-                    <button onClick={(e) => this.handleRemove(index)}>
-                      Remove task
+                    <button
+                      onClick={(e) => this.handleRemove(index)}
+                      className="transparent-button"
+                    >
+                      <i className="fa fa-trash" />
                     </button>
                   </div>
                 );
               })
             : null}
 
-          <button onClick={(e) => this.newInput(e)}>Add task</button>
+          <button
+            className="transparent-button"
+            onClick={(e) => this.newInput(e)}
+          >
+            <i className="fa fa-plus-circle"></i>
+          </button>
 
-          <div id="center-button">
-            <button
-              id="submit-button"
-              type="button"
-              onClick={this.handleFormUpdateSubmit}
-            >
-              EDIT LIST
-            </button>
-          </div>
-          {/* </form> */}
+          {this.state.newTasks.length > 0
+            ? this.state.newTasks.map((task, index) => {
+                return (
+                  <div className="new-list-form" key={index}>
+                    <input
+                      id={shortid.generate()}
+                      type="text"
+                      name="newTask"
+                      value={task.text}
+                      onChange={this.handleChangeNew}
+                    />
+                    <button
+                      onClick={(e) => this.handleRemove(index)}
+                      className="transparent-button"
+                    >
+                      <i className="fa fa-trash" />
+                    </button>
+                  </div>
+                );
+              })
+            : null}
+
+          <button
+            id="login-button"
+            type="button"
+            onClick={this.handleFormUpdateSubmit}
+          >
+            EDIT LIST
+          </button>
         </div>
       </div>
     );

@@ -47,13 +47,13 @@ export class Dashboard extends Component {
             <h1 className="signup-text">
               Your dashboard is empty!
               <br />
-              <Link to="/new-list">Create a list here</Link>
+              <Link to="/new-list">Create a list</Link>
             </h1>
           </div>
         ) : (
           <div id="dashboard-display">
             <div className="row">
-              <div className="column">
+              <div className="column1">
                 <div id="allLists-column">
                   <AllLists
                     allLists={this.state.allLists}
@@ -61,7 +61,7 @@ export class Dashboard extends Component {
                   />
                 </div>
               </div>
-              <div className="column">
+              <div className="column2">
                 <div id="selectedList-column">
                   <SelectedList
                     oneList={this.state.selectedList}
