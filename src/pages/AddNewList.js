@@ -6,8 +6,7 @@ export default class AddNewList extends Component {
   state = {
     name: "",
     status: "To-do",
-    tasks: [],
-    newTasks: [],
+    tasks: []
   };
 
   handleSubmit = (e) => {
@@ -27,32 +26,32 @@ export default class AddNewList extends Component {
       .catch((err) => console.log(err));
   };
 
+  handleChangeTitle = (e) => {
+    const { value, name } = e.target
+    this.setState({ [name]: value })
+  }
+
   handleChange = (e) => {
-    const { name, value, id } = e.target;
+    const { tasks } = this.state;
+    const { id, value } = e.target;
 
-    if (name === "newTask") {
-      const task = {
-        text: value,
-        isDone: false,
-      };
-
-      const tasksCopy = [...this.state.tasks];
-      tasksCopy.splice(id, 1, task);
-
-      this.setState({ tasks: tasksCopy });
-    } else {
-      this.setState({ [name]: value });
-    }
-    console.log(this.state.tasks);
+    const newTasks = [...tasks];
+    newTasks[id].text = value;
+    this.setState({ tasks: newTasks });
   };
 
-  newInput = (e) => {
-    this.setState({ newTasks: [...this.state.newTasks, ""] });
+  addEmptyInput = () => {
+    const task = {
+      text: "",
+      isDone: false,
+    };
+    this.setState((state) => ({ tasks: [...state.tasks, task] }));
   };
 
   handleRemove = (index) => {
-    this.state.newTasks.splice(index, 1);
-    this.setState({ newTasks: this.state.newTasks });
+    this.setState(({ tasks }) => ({
+      tasks: tasks.filter((item, idx) => idx !== index),
+    }));
   };
 
   render() {
@@ -70,7 +69,7 @@ export default class AddNewList extends Component {
               type="text"
               name="name"
               value={this.state.name}
-              onChange={this.handleChange}
+              onChange={this.handleChangeTitle}
             />
           </div>
 
@@ -78,18 +77,18 @@ export default class AddNewList extends Component {
           <br />
           <button
             className="transparent-button"
-            onClick={(e) => this.newInput(e)}
+            onClick={(e) => this.addEmptyInput(e)}
           >
             <i className="fa fa-plus-circle"></i>
           </button>
-          {this.state.newTasks.length > 0
-            ? this.state.newTasks.map((task, index) => {
+          {this.state.tasks.length > 0
+            ? this.state.tasks.map((task, index) => {
                 return (
                   <div className="new-list-form" key={index}>
                     <input
                       id={index}
                       type="text"
-                      name="newTask"
+                      name="task"
                       value={task.text}
                       onChange={this.handleChange}
                     />

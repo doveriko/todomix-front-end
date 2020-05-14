@@ -114,29 +114,25 @@ class SelectedList extends Component {
               </p>
 
               <div id="save-progress">
+                <button
+                  className="transparent-button"
+                  onClick={() => {
+                    this.updateTasksCompleted();
+                    this.onButtonMessage();
+                  }}
+                >
+                  <i className="fa fa-save" />
+                  <p>SAVE PROGRESS</p>
+                </button>
 
-              <button
-                className="transparent-button"
-                onClick={() => {
-                  this.updateTasksCompleted();
-                  this.onButtonMessage();
-                }}
-              >
-                <i className="fa fa-save" />
-                <p>SAVE PROGRESS</p>
-              </button>
-
-              {this.state.showMessage && <p>Progress saved!</p>}
-
+                {this.state.showMessage && <p>Progress saved!</p>}
               </div>
-
             </div>
 
             <div className="twobuttons">
               <Link to={`/list/${oneList._id}`}>
-                
                 <button className="transparent-button">
-                <i className="fa fa-edit"></i>
+                  <i className="fa fa-edit"></i>
                   <p>EDIT LIST</p>
                 </button>
               </Link>

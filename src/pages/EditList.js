@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import shortid from "shortid";
 
 class EditList extends Component {
   state = {
     _id: undefined,
     name: "",
     tasks: [],
-    newTasks: [],
     status: "To-do",
-    showAddTaskForm: false,
   };
 
   componentDidMount() {
@@ -33,63 +30,48 @@ class EditList extends Component {
       .catch((err) => console.log(err));
   }
 
+  handleChangeTitle = (e) => {
+    const { value, name } = e.target
+    this.setState({ [name]: value })
+  }
+
+  handleChange = (e) => {
+    const { tasks } = this.state;
+    const { id, value } = e.target;
+
+    const newTasks = [...tasks];
+    newTasks[id].text = value;
+    this.setState({ tasks: newTasks });
+  };
+
+  addEmptyInput = () => {
+    const task = {
+      text: "",
+      isDone: false,
+    };
+    this.setState((state) => ({ tasks: [...state.tasks, task] }));
+  };
+
+  handleRemove = (index) => {
+    this.setState(({ tasks }) => ({
+      tasks: tasks.filter((item, idx) => idx !== index),
+    }));
+  };
+
   handleFormUpdateSubmit = (event) => {
     event.preventDefault();
     const { name, tasks, status, isPrivate, _id } = this.state;
-
+    const cleanTasks = tasks.filter((task) => task.text !== "");
     axios
       .put(
         process.env.REACT_APP_API_URL + `/lists/${_id}`,
-        { name, tasks, status, isPrivate },
+        { name, tasks: cleanTasks, status, isPrivate },
         { withCredentials: true }
       )
       .then(() => {
         this.props.history.push("/dashboard");
       })
       .catch((err) => console.log(err));
-  };
-
-  handleChange = (event) => {
-    const { name, value, id } = event.target;
-
-    if (name === "taskToEdit") {
-
-      const task = {
-        text: value,
-      };
-
-      let tasksCopy = [...this.state.tasks];
-      tasksCopy.splice(id, 1, task);
-      this.setState({ tasks: tasksCopy });
-
-    } else if (name === "newTask") {
-
-      const task = {
-        text: value,
-        isDone: false,
-      };
-
-      let tasksCopy = [...this.state.newTasks];
-      tasksCopy.splice(id, 1, task);
-      this.setState({ tasks: tasksCopy });
-
-    } else {
-      this.setState({ [name]: value });
-    }
-    console.log(event.target.id);
-  };
-
-  handleRemove = (e, index) => {
-    this.state.tasks.splice(index, 1);
-    this.setState({ tasks: this.state.tasks });
-  };
-
-  toggleAddTaskForm = () => {
-    this.setState({ showAddTaskForm: !this.state.showAddTaskForm });
-  };
-
-  newInput = (e) => {
-    this.setState({ newTasks: [...this.state.newTasks, ""] });
   };
 
   render() {
@@ -107,67 +89,42 @@ class EditList extends Component {
               type="text"
               name="name"
               value={this.state.name}
-              onChange={this.handleChange}
+              onChange={this.handleChangeTitle}
             />
           </div>
 
           <label>Tasks:</label>
-          {this.state.tasks.length > 0
-            ? this.state.tasks.map((eachTask, index) => {
-                return (
-                  <div className="new-list-form" key={index}>
-                    <input
-                      id={index}
-                      type="text"
-                      name="taskToEdit"
-                      value={eachTask.text}
-                      onChange={this.handleChange}
-                    />
-                    <button
-                      onClick={(e) => this.handleRemove(index)}
-                      className="transparent-button"
-                    >
-                      <i className="fa fa-trash" />
-                    </button>
-                  </div>
-                );
-              })
-            : null}
 
-          <button
-            className="transparent-button"
-            onClick={(e) => this.newInput(e)}
-          >
+          {this.state.tasks.length > 0 ? (
+            this.state.tasks.map((eachTask, index) => {
+              return (
+                <div className="new-list-form" key={index}>
+                  <input
+                    id={index}
+                    type="text"
+                    name="task"
+                    placeholder={eachTask.text !== "" ? "" : "Edit this task"}
+                    value={eachTask.text}
+                    onChange={this.handleChange}
+                  />
+                  <button
+                    onClick={(e) => this.handleRemove(index)}
+                    className="transparent-button"
+                  >
+                    <i className="fa fa-trash" />
+                  </button>
+                </div>
+              );
+            })
+          ) : (
+            <p className="list-title">No tasks available</p>
+          )}
+
+          <button onClick={this.addEmptyInput} className="transparent-button">
             <i className="fa fa-plus-circle"></i>
           </button>
-
-          {this.state.newTasks.length > 0
-            ? this.state.newTasks.map((task, index) => {
-                return (
-                  <div className="new-list-form" key={index}>
-                    <input
-                      id={shortid.generate()}
-                      type="text"
-                      name="newTask"
-                      value={task.text}
-                      onChange={this.handleChangeNew}
-                    />
-                    <button
-                      onClick={(e) => this.handleRemove(index)}
-                      className="transparent-button"
-                    >
-                      <i className="fa fa-trash" />
-                    </button>
-                  </div>
-                );
-              })
-            : null}
-
-          <button
-            id="login-button"
-            type="button"
-            onClick={this.handleFormUpdateSubmit}
-          >
+          <p></p>
+          <button id="login-button" onClick={this.handleFormUpdateSubmit}>
             EDIT LIST
           </button>
         </div>
