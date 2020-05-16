@@ -16,7 +16,7 @@ class Navbar extends Component {
           </Link>
         </div>
         <div>
-          <Link to="/new-list" id="home-btn">
+          <Link to="/new-list">
             <FontAwesomeIcon icon={faFolderPlus} id="navbar-btn" />
           </Link>
         </div>
